@@ -69,8 +69,10 @@ class MyResample2D(nn.Module):
         hh = self.grid_h.expand_as(v) + v
 
         # Normalize indices to [-1,1]
-        ww = 2 * ww / (self.width - 1) - 1
-        hh = 2 * hh / (self.height - 1) - 1
+        denom_w = self.width - 1 if self.width > 1 else 1
+        denom_h = self.height - 1 if self.height > 1 else 1
+        ww = 2 * ww / denom_w - 1
+        hh = 2 * hh / denom_h - 1
 
         # Form a grid of shape (batch_size, height, width, 2)
         norm_grid_wh = torch.stack((ww, hh), dim=-1)
