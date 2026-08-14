@@ -47,6 +47,24 @@ import datasets
 import models
 import utils
 
+
+def load_checkpoint(model, resume_path):
+    checkpoint = torch.load(resume_path)
+
+    # Partial initialization
+    input_dict = checkpoint['state_dict']
+    curr_dict = model.module.state_dict()
+    state_dict = input_dict.copy()
+    for key in input_dict:
+        if key not in curr_dict:
+            continue
+        if curr_dict[key].shape != input_dict[key].shape:
+            state_dict.pop(key)
+            print("key {} skipped because of size mismatch.".format(key))
+    model.module.load_state_dict(state_dict, strict=False)
+
+    return checkpoint['epoch']
+
 """
 Reda, Fitsum A., et al. "Unsupervised Video Interpolation Using Cycle Consistency."
  arXiv preprint arXiv:1906.05928 (2019).
@@ -112,21 +130,7 @@ def main():
 
         block.log("Attempting to Load checkpoint '{}'".format(args.resume))
         if args.resume and os.path.isfile(args.resume):
-            checkpoint = torch.load(args.resume)
-
-            # Partial initialization
-            input_dict = checkpoint['state_dict']
-            curr_dict = model.module.state_dict()
-            state_dict = input_dict.copy()
-            for key in input_dict:
-                if key not in curr_dict:
-                    continue
-                if curr_dict[key].shape != input_dict[key].shape:
-                    state_dict.pop(key)
-                    print("key {} skipped because of size mismatch.".format(key))
-            model.module.load_state_dict(state_dict, strict=False)
-
-            epoch = checkpoint['epoch']
+            epoch = load_checkpoint(model, args.resume)
             block.log("Successfully loaded checkpoint (at epoch {})".format(epoch))
         elif args.resume:
             block.log("No checkpoint found at '{}'.\nAborted.".format(args.resume))
