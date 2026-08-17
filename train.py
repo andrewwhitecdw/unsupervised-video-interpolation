@@ -184,7 +184,7 @@ def get_train_and_valid_data_loaders(block, args):
     # validation dataloader
     vkwargs = {'batch_size': args.val_batch_size,
                'num_workers': args.workers,
-               'pin_memory': True, 'drop_last': True}
+               'pin_memory': True, 'drop_last': False}
     step_size = args.val_step_size if args.val_step_size > 0 else (args.val_num_interp + 1)
 
     val_dataset = args.dataset_class(args=args, root=args.val_file, num_interp=args.val_num_interp,
