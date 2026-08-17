@@ -308,7 +308,10 @@ def calc_linf_grad_norm(args,parameters):
     if isinstance(parameters, torch.Tensor):
         parameters = [parameters]
     parameters = list(filter(lambda p: p.grad is not None, parameters))
-    max_norm = max(p.grad.data.abs().max() for p in parameters)
+    if not parameters:
+        max_norm = 0.0
+    else:
+        max_norm = max(p.grad.data.abs().max() for p in parameters)
     max_norm_reduced = torch.cuda.FloatTensor([max_norm])
     if args.world_size > 1:
         torch.distributed.all_reduce(max_norm_reduced,
