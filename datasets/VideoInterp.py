@@ -44,7 +44,6 @@ class VideoInterp(data.Dataset):
         self.step_size = step_size
         self.transform = transform
         self.is_training = is_training
-        self.transform = transform
 
         self.start_index = args.start_index
         self.stride = args.stride
