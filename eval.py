@@ -170,7 +170,7 @@ def evaluate(args, val_loader, model, num_interp, epoch, block):
             # compute loss at mid-way
             tar_indices[:] = (num_interp + 1) // 2
             loss, outputs, _ = model(inputs_dict, tar_indices)
-            loss_values.update(loss['tot'].data.item(), outputs.size(0))
+            loss_values.update(loss['tot'].item(), outputs.size(0))
 
             # compute output for each intermediate timepoint
             output_image = inputs[0]
