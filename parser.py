@@ -82,8 +82,9 @@ parser.add_argument('--lr_gamma', default=0.1, type=float,
 parser.add_argument('--lr_step', default=200, type=int,
                     help='stepsize of changing the learning rate')
 parser.add_argument('--lr_milestones', type=int, nargs='+',
-                    default=[250, 450], help="Spatial dimension to " +
-                                             "crop training samples for training")
+                    default=[250, 450],
+                    help='Milestone epochs at which the learning rate is multiplied by lr_gamma' +
+                         '(default: [250, 450])')
 # Gradient.
 parser.add_argument('--clip_gradients', default=-1.0, type=float,
                     help='If positive, clip the gradients by this value.')
