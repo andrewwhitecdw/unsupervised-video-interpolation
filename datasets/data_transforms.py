@@ -416,13 +416,13 @@ class RandomSaturation(object):
 
         # Apply a saturation
         for i, image in enumerate(inputs):
-            gray_img = image[..., 0] * 0.299 + image[..., 1] * image[..., 2] * 0.114
+            gray_img = image[..., 0] * 0.299 + image[..., 1] * 0.587 + image[..., 2] * 0.114
             tmp_img = np.stack((gray_img, gray_img, gray_img), axis=2)
             image = image * saturation + (1 - saturation) * tmp_img
             inputs[i] = np.clip(image, 0, 255)
 
         for i, image in enumerate(targets):
-            gray_img = image[..., 0] * 0.299 + image[..., 1] * image[..., 2] * 0.114
+            gray_img = image[..., 0] * 0.299 + image[..., 1] * 0.587 + image[..., 2] * 0.114
             tmp_img = np.stack((gray_img, gray_img, gray_img), axis=2)
             image = image * saturation + (1 - saturation) * tmp_img
             targets[i] = np.clip(image, 0, 255)
