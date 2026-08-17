@@ -142,9 +142,9 @@ class CycleHJSuperSloMo(HJSuperSloMo):
 
         # Calculate Pseudo targets at interm_index
         with torch.no_grad():
-            _, psuedo_gt12, _ = self.teacher({'image': [im1, im1, im2]}, target_index)
-            _, psuedo_gt23, _ = self.teacher({'image': [im2, im3, im3]}, target_index)
-        psuedo_gt12, psuedo_gt23 = psuedo_gt12 - self.mean_pix, psuedo_gt23 - self.mean_pix
+            _, pseudo_gt12, _ = self.teacher({'image': [im1, im1, im2]}, target_index)
+            _, pseudo_gt23, _ = self.teacher({'image': [im2, im3, im3]}, target_index)
+        pseudo_gt12, pseudo_gt23 = pseudo_gt12 - self.mean_pix, pseudo_gt23 - self.mean_pix
 
         im1, im2, im3 = im1 - self.mean_pix, im2 - self.mean_pix, im3 - self.mean_pix
 
@@ -219,7 +219,7 @@ class CycleHJSuperSloMo(HJSuperSloMo):
 
         losses['loss_smooth'] = smooth_bwd + smooth_fwd
 
-        losses['teacher'] = self.L1_loss(psuedo_gt12, pred12) + self.L1_loss(psuedo_gt23, pred23)
+        losses['teacher'] = self.L1_loss(pseudo_gt12, pred12) + self.L1_loss(pseudo_gt23, pred23)
 
         # Coefficients for total loss determined empirically using a validation set
         losses['tot'] = self.pix_alpha * losses['pix_loss'] + self.warp_alpha * losses['warp_loss'] + \
