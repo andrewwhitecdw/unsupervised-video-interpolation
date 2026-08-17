@@ -32,6 +32,10 @@ import models
 model_names = sorted(el for el in models.__dict__
                      if not el.startswith("__") and callable(models.__dict__[el]))
 
+if not model_names:
+    raise RuntimeError(
+        "No callable model classes found in the models package.")
+
 """
 Reda, Fitsum A., et al. "Unsupervised Video Interpolation Using Cycle Consistency."
  arXiv preprint arXiv:1906.05928 (2019).
