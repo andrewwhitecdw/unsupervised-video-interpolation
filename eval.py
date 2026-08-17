@@ -39,7 +39,6 @@ tqdm.monitor_interval = 0
 import torch
 import torch.backends.cudnn
 import torch.nn.parallel
-import torch.optim
 import torch.utils.data
 
 from parser import parser
