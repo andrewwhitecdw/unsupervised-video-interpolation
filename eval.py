@@ -232,7 +232,7 @@ def evaluate(args, val_loader, model, num_interp, epoch, block):
             if (i + 1) >= num_batches:
                 break
 
-    if args.write_video:
+    if args.rank == 0 and args.write_video:
         _pipe.stdin.close()
         _pipe.wait()
 
