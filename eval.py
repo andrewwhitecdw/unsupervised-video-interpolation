@@ -242,10 +242,11 @@ def evaluate(args, val_loader, model, num_interp, epoch, block):
     as the quantities should not be trusted, in this case.
     """
     for i in range(num_interp):
+        mean_metrics = np.nanmean(avg_metrics[i::num_interp], axis=0)
         result2print = 'interm {:02d} PSNR: {:.2f}, SSIM: {:.3f}, IE: {:.2f}'.format(i+1,
-            np.nanmean(avg_metrics[i::num_interp], axis=0)[0],
-            np.nanmean(avg_metrics[i::num_interp], axis=0)[1],
-            np.nanmean(avg_metrics[i::num_interp], axis=0)[2])
+            mean_metrics[0],
+            mean_metrics[1],
+            mean_metrics[2])
         block.log(result2print)
 
     avg_metrics = np.nanmean(avg_metrics, axis=0)
