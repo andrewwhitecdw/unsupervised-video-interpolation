@@ -112,7 +112,7 @@ class RandomRotate2D(object):
         resample = self.resample
 
         inputs[0] = transf.rotate(inputs[0], angle=(base - delta / 2.), resample=resample)
-        inputs[-1] = transf.rotate(inputs[1], angle=(base + delta / 2.), resample=resample)
+        inputs[-1] = transf.rotate(inputs[-1], angle=(base + delta / 2.), resample=resample)
 
         # Apply linearly varying offset to targets
         # calculate offset ~ (-delta/2., delta/2.)
