@@ -111,6 +111,7 @@ def main():
         torch.manual_seed(args.seed)
 
         block.log("Attempting to Load checkpoint '{}'".format(args.resume))
+        epoch = 0
         if args.resume and os.path.isfile(args.resume):
             checkpoint = torch.load(args.resume)
 
