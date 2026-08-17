@@ -169,9 +169,11 @@ class CycleVideoInterp(VideoInterp):
 
         # # Adjust  indices
         if self.is_training:
-            self.counts = [el - 1 for el in self.counts]
-        self.total = np.sum(self.counts)
-        self.cum_sum = list(np.cumsum([0] + [el for el in self.counts]))
+            self.counts = [max(0, el - 1) for el in self.counts]
+        else:
+            self.counts = [max(0, el) for el in self.counts]
+        self.total = int(np.sum(self.counts))
+        self.cum_sum = list(np.cumsum([0] + self.counts))
 
     def get_sample_indices(self, index, tar_index=None):
         if self.is_training:
