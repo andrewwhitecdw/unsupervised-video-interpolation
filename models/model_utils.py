@@ -51,6 +51,11 @@ class MyResample2D(nn.Module):
         self.width = width
         self.height = height
 
+        if width <= 1 or height <= 1:
+            raise ValueError(
+                "width and height must be greater than 1, got width={} height={}".format(width, height)
+            )
+
         # make grids for horizontal and vertical displacements
         grid_w, grid_h = np.meshgrid(np.arange(width), np.arange(height))
         grid_w, grid_h = grid_w.reshape((1,) + grid_w.shape), grid_h.reshape((1,) + grid_h.shape)
@@ -76,9 +81,9 @@ class MyResample2D(nn.Module):
         norm_grid_wh = torch.stack((ww, hh), dim=-1)
 
         # Perform a resample
-        reampled_im = torch.nn.functional.grid_sample(im, norm_grid_wh)
+        resampled_im = torch.nn.functional.grid_sample(im, norm_grid_wh)
 
-        return reampled_im
+        return resampled_im
 
 
 class DummyModel(nn.Module):
