@@ -66,7 +66,7 @@ parser.add_argument('--resume', default='', type=str, metavar='CHECKPOINT_PATH',
 parser.add_argument('--distributed_backend', default='nccl', type=str, metavar='DISTRIBUTED_BACKEND',
                     help='backend used for communication between processes.')
 parser.add_argument('-j', '--workers', default=4, type=int,
-                    help='number of data loader workers (default: 10)')
+                    help='number of data loader workers (default: 4)')
 parser.add_argument('-g', '--gpus', type=int, default=-1,
                     help='number of GPUs to use')
 parser.add_argument('--fp16', action='store_true', help='Enable mixed-precision training.')
